@@ -10,7 +10,7 @@ app.use(bodyParser.json())
 
 const session = require('express-session');
 require("./database/connection")
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 4001;
 
 
 const labour = require("./route/labour_route");
