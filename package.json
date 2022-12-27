@@ -19,6 +19,7 @@
     "core-util-is": "^1.0.3",
     "cors": "^2.8.5",
     "cryptiles": "^0.2.2",
+    "crypto": "^1.0.1",
     "ctype": "^0.5.3",
     "debug": "^2.6.9",
     "delayed-stream": "^0.0.5",
@@ -64,6 +65,7 @@
     "osenv": "^0.0.3",
     "qs": "^0.6.6",
     "raw-body": "^2.5.1",
+    "razorpay": "^2.8.4",
     "readable-stream": "^1.0.34",
     "request": "^2.27.0",
     "safer-buffer": "^2.1.2",
@@ -78,13 +80,14 @@
     "tunnel-agent": "^0.3.0",
     "type-is": "^1.6.18",
     "unpipe": "^1.0.0",
+    "uuid": "^9.0.0",
     "vary": "^1.1.2",
     "wordwrap": "^0.0.3",
     "xtend": "^2.0.6"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js",
+    "start": "nodemon app.js",
     "dev": "nodemon app.js "
   },
   "keywords": [],

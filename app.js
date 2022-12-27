@@ -19,6 +19,10 @@ const customerwork = require("./route/customerwork_route");
 const customerating = require("./route/customer_rating_route");
 const startduty = require("./route/startduty_route");
 const admin = require('./route/admin_route')
+const privacy = require('./route/privacy_router')
+const contact = require('./route/contact');
+const payment = require('./route/payment_router');
+const order = require('./route/order_router')
 
 
 
@@ -46,6 +50,10 @@ app.use(customerwork);
 app.use(customerating);
 app.use(startduty);
 app.use(admin);
+app.use(privacy);
+app.use(contact);
+app.use(payment);
+app.use(order)
 
 app.listen(port, () => {
     console.log(`server is running at port no ${port}`);
