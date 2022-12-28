@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const path = require("path");
+const cors = require('cors');
 
 var bodyParser = require('body-parser')
 
@@ -29,6 +30,7 @@ const order = require('./route/order_router')
 
 app.use(express.json());
 const staticpath = path.join(__dirname, "./public");
+app.use(cors())
 app.use(express.static(staticpath));
 app.use(express.static('images'));
 app.use(express.urlencoded({ extended: true }));

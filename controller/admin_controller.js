@@ -1,10 +1,11 @@
 
 
 customermodel = require('../model/customer_model')
-labourmodel = require('../model/labour_model')
 customerworkmodel = require("../model/customer_work_model.js")
 adminmodel = require("../model/admin_model");
+
 const sha256 = require('sha256');
+const labourmodel = require('../model/labour_model');
 
 
 
@@ -81,6 +82,41 @@ const adminsignin = (req, res) => {
 
 }
 
+const taskAssigntoLabour = async(req,res) => {
+    try{
+    const data = {
+        name: req.body.name, 
+        desc: req.body.desc, 
+        location: req.body.location
+    }
+    const Data =  await labourmodel.create(data);
+    res.status(200).json({
+        details: Data 
+    })
+    }catch(err){
+        res.status(400).json({
+            message: err.message
+        })
+    }
+}
+
+const GetAllLabourTask = async(req,res) =>{
+    try{
+        const data = await labourmodel.find();
+        if(data.length ===  0 ){
+            return res.status(500).json({
+                message: "No Data Found "
+            })
+        }
+        res.status(200).json({
+            details: data
+        })
+    }catch(err){
+        res.status(400).json({
+            message: err.message
+        })
+    }
+}
 
 const admingetallcustomer = (req, res) => {
     customermodel.find({ isdeleted: false }).then((result) => {
@@ -205,7 +241,7 @@ const admingetworkbyworkid = (req, res) => {
 
 
 
-module.exports = { admingetallcustomer, admingetalllabour, admingetcustomerbyid, admingetlabourbyid, admingetallwork, admingetworkbyworkid, adminsignup ,adminsignin}
+module.exports = { admingetallcustomer, admingetalllabour, admingetcustomerbyid, admingetlabourbyid, admingetallwork, admingetworkbyworkid, adminsignup ,adminsignin, GetAllLabourTask, taskAssigntoLabour}
 
 
 

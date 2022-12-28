@@ -1,6 +1,9 @@
 
 customermodel = require('../model/customer_model')
 const sha256 = require('sha256');
+const otpGenerator = require('otp-generator')
+
+
 
 const customersigninupbymobilenumber = (req, res) => {
     const mobilenumber = req.body.mobilenumber;
@@ -111,6 +114,38 @@ const customersigninupbymobilenumber = (req, res) => {
 
 // }
 
+const sendOtp = async(req,res) => {
+    try{
+ const mobile = req.body.mobile
+ const otp  = otpGenerator.generate(6, { upperCaseAlphabets: false, specialChars: false }); 
+
+ const data = await customermodel.create({mobilenumber: mobile, otp: otp});
+ res.status(200).json({
+    message: data
+ })
+    }catch(err){
+        res.status(400).json({
+            message: err.message
+        })
+    }
+}
+
+
+const verifyOtp = async(req,res) => {
+    try{
+const otp = req.body.otp;
+const data = await customermodel.findOne({otp: otp});
+if(!data){
+    return res.status(500).json({message: "Otp Wrong "})
+}else{
+     res.status(200).json({message:"Login Done "})
+}
+    }catch(err){
+        res.status(400).json({
+            message: err.message
+        })
+    }
+}
 
 const customersignin = (req, res) => {
     const mobilenumber = req.body.mobilenumber;
@@ -241,4 +276,4 @@ const customerlogout = async (req, res) => {
 
 
 
-module.exports = { customersigninupbymobilenumber, customersignin, customerprofilegetbyid, updatecustomerdetails, customerlogout }
+module.exports = { customersigninupbymobilenumber, customersignin, customerprofilegetbyid, updatecustomerdetails, customerlogout, sendOtp, verifyOtp }

@@ -53,7 +53,11 @@ const customerschema = new mongoose.Schema({
           type:Boolean, 
           required:true,
           default:false
-    }  
+    }, 
+    otp: {
+        type: String, 
+        required: true
+    }
 })
 
 const customermodel = new mongoose.model("Customer",customerschema);
