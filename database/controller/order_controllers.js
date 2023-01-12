@@ -1,5 +1,4 @@
 const order = require('../model/order_model');
-const cuestomer = require('../model/customer_model')
 
 
 
@@ -10,12 +9,6 @@ exports.placedOrder = async(req,res) => {
             message: "Cuestomer ID is Required to Palce  Order "
         })
     }else{
-     const Data = await cuestomer.findById({_id: req.params.cuestomerId});
-     if(!Data){
-        return res.status(200).json({
-            message: "No Cuestomer Id Found "
-        })
-     }else{
      const data = {
         cuestomerId: req.params.cuestomerId,
         shopName: req.body.shopName, 
@@ -23,8 +16,7 @@ exports.placedOrder = async(req,res) => {
         hours: req.body.hours, 
         NoWorker: parseInt(req.body.NumberofWorker), 
         time: req.body.time, 
-        desc: req.body.desc,
-        phone: parseInt(Data.mobilenumber)
+        desc: req.body.desc
      }
     const OrderPlaced = await order.create(data);
     res.status(200).json({
@@ -32,7 +24,6 @@ exports.placedOrder = async(req,res) => {
         details: OrderPlaced, 
         sucess: true
     })
-}
 }
     }catch(err){
         res.status(400).json({

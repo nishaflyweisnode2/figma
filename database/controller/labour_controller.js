@@ -2,8 +2,6 @@
 labourmodel = require('../model/labour_model')
 const sha256 = require('sha256');
 const otpGenerator = require('otp-generators');
-const labourtask = require('../model/labour_task');
-const labourByadmin = require('../model/patnerId_model');
 
 
 
@@ -110,11 +108,6 @@ const createearnings = (req, res) => {
 
     const earningammount = req.body.earningammount
     labourmodel.findById(labourid).then((result) => {
-        if(result.length == 0 ){
-            return res.status(500).json({
-                message: "Labour Id Not Found "
-            })
-        }else{
         result.earningammount = earningammount;
         let earnings = [];
         earnings = result.earnings;
@@ -134,7 +127,6 @@ const createearnings = (req, res) => {
 
             })
         })
-    }
     });
 
 }
@@ -477,11 +469,6 @@ const labouracceptextendedwork = (req, res) => {
     const d = new Date();
     const workid = req.params._id;
     customerworkmodel.findById(workid).then((result) => {
-        if(!result){
-            return res.status(500).json({
-                message: "Labour Id is Not Found "
-            })
-        }else{
         let extendedworkstatus = [];
         extendedworkstatus = result.extendedworkstatus;
         extendedworkstatus.push({
@@ -502,7 +489,6 @@ const labouracceptextendedwork = (req, res) => {
 
             })
         });
-    }
     });
 }
 
@@ -535,38 +521,9 @@ const labourrejectextendedwork = (req, res) => {
 };
 
 
-const DeleteLabor = async(req,res) =>  {
-    try{
-    await labourmodel.findByIdAndDelete({_id: req.params.id})
-    res.status(200).json({
-        message: "Deleted Cuestomer"
-    })
-    }catch(err){
-        res.status(400).json({
-            message: err.message
-        })
-    }
-}
 
-const labourOrderByLabourID = async(req,res) => {
-    try{
-        const patnerId = await labourByadmin.findOne({labourId: req.params.id});
-        const work = await labourtask.findOne({labourId: req.params.id});
-        if(!work){
-            return res.status(500).json({
-                message: "No work assign to labour"
-            })
-        }
-     res.status(200).json({
-        data: work, 
-        Id : patnerId. partnerId
-     })
-    }catch(err){
-        res.status(400).json({
-            message: err.message
-        })
-    }
-}
+
+
 
 
 
@@ -582,5 +539,5 @@ module.exports = {
     updatelabourdetails, laboursignup, laboursignin, labourlogout, getlabourprofilebyid,
     labourgetallwork, labourgetworkbyworkid, acceptworkbylabour, rejectworkbylabour, labourgetextendwork,
     labourgetallextendedwork, labouracceptextendedwork, labourrejectextendedwork, createearnings,getlastsevendaysearnings,
-    gettodaysearnings, sendOtp, verifyOtp, DeleteLabor, labourOrderByLabourID
+    gettodaysearnings, sendOtp, verifyOtp
 };

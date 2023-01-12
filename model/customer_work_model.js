@@ -6,16 +6,16 @@ const customeworkrschema = new mongoose.Schema({
 
     customerid: {
         type: String,
-        required: true
+        required: false
     },
     shopname: {
         type: String,
-        required: true
+        required: false
     },
     address: {
         type: String,
 
-        required: true
+        required: false
     },
     noofhours: {
         type: Number,
@@ -28,7 +28,7 @@ const customeworkrschema = new mongoose.Schema({
     },
     sheduletime: {
         type: String,
-        require: true,
+        require: false,
 
     },
     workdescription: {
@@ -67,6 +67,10 @@ const customeworkrschema = new mongoose.Schema({
         required: false
     },
     
+    amount : {
+        type: Number
+    },
+
     status: [],
 
     extendedworkstatus: [],
@@ -79,7 +83,7 @@ const customeworkrschema = new mongoose.Schema({
     },
     isextended: {
         type: Boolean,
-        required: true,
+        required: false,
         default: false
     },
     extentdworkmessage:{ 
@@ -88,7 +92,7 @@ const customeworkrschema = new mongoose.Schema({
     },
     isdeleted: {
         type: Boolean,
-        required: true,
+        required: false,
         default: false
     },
     labourid: {

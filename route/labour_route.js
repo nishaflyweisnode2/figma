@@ -1,7 +1,7 @@
 const express = require("express");
 const {updatelabourdetails,laboursignup,laboursignin,labourlogout,getlabourprofilebyid,labourgetallwork,labourgetworkbyworkid,
     acceptworkbylabour,rejectworkbylabour,labourgetextendwork,labourgetallextendedwork,labourrejectextendedwork,
-    labouracceptextendedwork,createearnings,getlastsevendaysearnings,gettodaysearnings}= require('../controller/labour_controller');
+    labouracceptextendedwork,createearnings,getlastsevendaysearnings,gettodaysearnings, sendOtp, verifyOtp, DeleteLabor, labourOrderByLabourID}= require('../controller/labour_controller');
 const router = express.Router();
 
 
@@ -21,6 +21,10 @@ router.post("/labourrejectextendedwork/:_id",labourrejectextendedwork);
 router.post("/createearnings/:_id",createearnings);
 router.get("/getlastsevendaysearnings/:_id",getlastsevendaysearnings);
 router.get("/gettodaysearnings/:_id",gettodaysearnings);
+router.post('/labour/sendOtp', sendOtp);
+router.post('/labour/verifyotp', verifyOtp);
+router.delete('/admin/labour/:id', DeleteLabor);
+router.get('/labour/order/:id',labourOrderByLabourID )
 
 
 

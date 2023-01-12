@@ -1,5 +1,5 @@
 
-const customermodel = require('../model/customer_model')
+customermodel = require('../model/customer_model')
 const sha256 = require('sha256');
 const otpGenerator = require('otp-generators')
 
@@ -233,6 +233,7 @@ const updatecustomerdetails = (req, res) => {
                 message: "UserId is Invalid "
             })
         }else{
+        result. customerId = req.body.customerId
         result.fullname = fullname;
         result.shopaddress = shopaddress;
         result.shopname = shopname;
@@ -277,40 +278,10 @@ const customerlogout = async (req, res) => {
         })
     } catch (error) {
         console.log(error.message);
-        res.status(400).json({
-            message: err.message
-        })
     }
 
 }
 
-const DeleCuestomer = async(req,res) =>  {
-    try{
-    await customermodel.findByIdAndDelete({_id: req.params.id})
-    res.status(200).json({
-        message: "Deleted Cuestomer"
-    })
-    }catch(err){
-        res.status(400).json({
-            message: err.message
-        })
-    }
-}
-
-const AddCuestomerId = async(req,res) => {
-    try{
-        await customermodel.findByIdAndUpdate({_id: req.params.id},{
-            customerId: req.body.customerId
-        }, {new: true})
-        res.status(200).json({
-            message: "Create"
-        })
-    }catch(err){
-        res.status(400).json({
-            message: err.message
-        })
-    }
-}
 
 
 
@@ -319,4 +290,6 @@ const AddCuestomerId = async(req,res) => {
 
 
 
-module.exports = { customersigninupbymobilenumber, customersignin, customerprofilegetbyid, updatecustomerdetails, customerlogout, sendOtp, verifyOtp, DeleCuestomer, AddCuestomerId }
+
+
+module.exports = { customersigninupbymobilenumber, customersignin, customerprofilegetbyid, updatecustomerdetails, customerlogout, sendOtp, verifyOtp }

@@ -7,7 +7,6 @@ const labourmodel = require('../model/labour_model')
 const customercreatework = (req, res) => {
 
     // if (req.session.customerdetails != null || req.session.customerdetails != undefined) {
-        
             const customerid = req.params.cuestomerId
             const shopname = req.body.shopname;
             const address = req.body.address;

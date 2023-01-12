@@ -28,8 +28,6 @@ const contact = require('./route/contact');
 const payment = require('./route/payment_router');
 const order = require('./route/order_router');
 const notify = require('./route/notify_router')
-const banner = require('./route/banner');
-const terms = require('./route/terms')
 
 
 
@@ -62,9 +60,7 @@ app.use(privacy);
 app.use(contact);
 app.use(payment);
 app.use(order);
-app.use(notify);
-app.use(banner);
-app.use(terms);
+app.use(notify)
 
 app.listen(port, () => {
     console.log(`server is running at port no ${port}`);

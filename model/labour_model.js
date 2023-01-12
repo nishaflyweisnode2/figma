@@ -4,22 +4,22 @@ const mongoose = require("mongoose");
 const labourschema = new mongoose.Schema({
     fullname:{
         type:String,
-        required:true
+        required:false
     }, 
     mobilenumber:{
         type:String,
        unique:true,
-        required:true
+        required:false
     },
    
     addresstype:{
         type:String,
-       require:true,
+       require:false,
        
     },
     typesofwork:{
         type:String,
-       require:true,
+       require:false,
        
     },
     password:{
@@ -29,7 +29,7 @@ const labourschema = new mongoose.Schema({
     },
     usertype:{
         type:String,
-       require:true,
+       require:false,
        
     },
     earnings:[],
@@ -43,7 +43,15 @@ const labourschema = new mongoose.Schema({
           type:Boolean, 
           required:true,
           default:false
-    }  
+    }, 
+    otp: {
+        type: String, 
+        required: true
+    } ,
+    patnerId: {
+     type: String, 
+     require: false
+    }
 })
 
 

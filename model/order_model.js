@@ -26,8 +26,11 @@ const orderSchema = mongoose.Schema({
     },
     amoumt: {
         type: Number
+    },
+    phone: {
+        type: Number
     }
-})
+}, { timestamps: true})
 
 
 const order = mongoose.model('order', orderSchema);

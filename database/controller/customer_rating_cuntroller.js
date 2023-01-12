@@ -1,7 +1,7 @@
 customerratingmodel = require("../model/customer_rating_mode");
 
 const postratingbycustomer = (req, res) => {
-    const customerid = req.body.customerid;;
+    const customerid = req.session.customerdetails.customerid;;
     const workid = req.body.workid;
     const comment = req.body.comment;
     const rating = req.body.rating;
@@ -56,11 +56,7 @@ const ratingeditbycustomer = (req,res)=>{
     const comment = req.body.comment;
     const rating = req.body.rating;
     customerratingmodel.findById(ratingid).then((result)=>{
-       if(result.length ==0 || !result){
-        return res.status(500).json({
-            message: "rating Id not Found "
-        })
-       } else{
+       
         result.comment = comment;
         result.rating = rating;
        
@@ -76,7 +72,6 @@ const ratingeditbycustomer = (req,res)=>{
 
             })
         })
-    }
     })
 
    

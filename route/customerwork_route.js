@@ -3,7 +3,7 @@ const {customercreatework,getworkbyid,extendwork,getextendworkbyworkid,getworkhi
 const router = express.Router();
 
 
-router.post("/customercreatework",customercreatework);
+router.post("/customercreatework/:cuestomerId",customercreatework);
 router.get("/getworkbyid/:_id",getworkbyid);
 router.post("/extendwork/:_id",extendwork);
 router.get("/getextendworkbyworkid/:_id",getextendworkbyworkid);

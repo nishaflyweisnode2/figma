@@ -1,13 +1,11 @@
 
 
 customermodel = require('../model/customer_model')
-const customerworkmodel = require("../model/customer_work_model.js")
+customerworkmodel = require("../model/customer_work_model.js")
 adminmodel = require("../model/admin_model");
 
 const sha256 = require('sha256');
-const labourmodel = require('../model/labour_model')
-const labourtask = require('../model/labour_task');
-const labourByadmin = require('../model/patnerId_model');
+const labourmodel = require('../model/labour_model');
 
 
 
@@ -86,19 +84,12 @@ const adminsignin = (req, res) => {
 
 const taskAssigntoLabour = async(req,res) => {
     try{
-    if(!req.body.labourId){
-        return res.status(500).json({
-            message: "Labour Id require "
-        })
-    }
-    const laborData = await labourmodel.findById({_id: req.body.labourId})
     const data = {
-        labourId: req.body.labourId,
-        name: laborData.fullname,
+        name: req.body.name, 
         desc: req.body.desc, 
         location: req.body.location
     }
-    const Data =  await labourtask.create(data);
+    const Data =  await labourmodel.create(data);
     res.status(200).json({
         details: Data 
     })
@@ -111,7 +102,7 @@ const taskAssigntoLabour = async(req,res) => {
 
 const GetAllLabourTask = async(req,res) =>{
     try{
-        const data = await labourtask.find();
+        const data = await labourmodel.find();
         if(data.length ===  0 ){
             return res.status(500).json({
                 message: "No Data Found "
@@ -126,8 +117,6 @@ const GetAllLabourTask = async(req,res) =>{
         })
     }
 }
-
-
 
 const admingetallcustomer = (req, res) => {
     customermodel.find({ isdeleted: false }).then((result) => {
@@ -250,31 +239,11 @@ const admingetworkbyworkid = (req, res) => {
         })
 }
 
-const UpdateCuestomerStatus = async(req, res) => {
-    try{
-    if(!req.params.id){
-        return res.status(500).json({
-            message: "Work Id is require"
-        })
-    }else{
-     await customerworkmodel.findByIdAndUpdate({_id: req.params.id}, {
-        workstatus  : req.body.workstatus
-     })
-     res.status(200).json({
-        message: "Status Changes"
-     })
-    }
-    }catch(err){
-        res.status(400).json({
-            message: err.message
-        })
-    }
-}
 
 
 
 
-module.exports = { admingetallcustomer, admingetalllabour, admingetcustomerbyid, admingetlabourbyid, admingetallwork, admingetworkbyworkid, adminsignup ,adminsignin, GetAllLabourTask, taskAssigntoLabour, UpdateCuestomerStatus}
+module.exports = { admingetallcustomer, admingetalllabour, admingetcustomerbyid, admingetlabourbyid, admingetallwork, admingetworkbyworkid, adminsignup ,adminsignin, GetAllLabourTask, taskAssigntoLabour}
 
 
 
