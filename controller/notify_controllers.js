@@ -5,9 +5,7 @@ exports.AddNotify = async(req,res) => {
     try{
         const data = {
             userId: req.body.userId,
-            Name: req.body.Name,
             desc: req.body.desc,
-            NoLabour: parseInt(req.body.NoLabour)
         }
         console.log(data)
         const Data = await notify.create(data)

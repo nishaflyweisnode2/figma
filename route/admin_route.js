@@ -1,5 +1,5 @@
 const express = require("express");
-const { adminsignup,adminsignin,admingetallcustomer,admingetalllabour,admingetcustomerbyid,admingetlabourbyid,admingetallwork,admingetworkbyworkid, GetAllLabourTask, taskAssigntoLabour, UpdateCuestomerStatus}= require('../controller/admin_controller');
+const { adminsignup,adminsignin,admingetallcustomer,admingetalllabour,admingetcustomerbyid,admingetlabourbyid,admingetallwork,admingetworkbyworkid, GetAllLabourTask, taskAssigntoLabour, UpdateCuestomerStatus, getAllPatnerIdAndLabourId, AllActivePatner, getAllPatnerId}= require('../controller/admin_controller');
 const labourByAdmin  = require('../controller/labourByAdmin')
 const addInvoice = require('../controller/invoice_controllers');
 const { AddCuestomerId } = require("../controller/customer_controller");
@@ -31,7 +31,10 @@ router.get('/admin/getinvoice', addInvoice.GetAllInvoice);
 router.put('/admin/invoice/:id', addInvoice.updateInvoice);
 router.delete('/admin/invoice/:id', addInvoice.DeleteByID)
 
-
+router.get('/admin/Ids/', getAllPatnerIdAndLabourId);
+router.get('/admin/patnerId', getAllPatnerId)
+//Active Patners 
+router.get('/admin/status', AllActivePatner)
 
 
 

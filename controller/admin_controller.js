@@ -1,6 +1,6 @@
 
 
-customermodel = require('../model/customer_model')
+const customermodel = require('../model/customer_model')
 const customerworkmodel = require("../model/customer_work_model.js")
 adminmodel = require("../model/admin_model");
 
@@ -96,9 +96,13 @@ const taskAssigntoLabour = async(req,res) => {
         labourId: req.body.labourId,
         name: laborData.fullname,
         desc: req.body.desc, 
-        location: req.body.location
+        location: req.body.location,
+        patnerId: req.body.patnerId
     }
     const Data =  await labourtask.create(data);
+    await labourByadmin.updateOne({labourId: req.body.labourId}, {
+        status: "true"
+    }, {new: true})
     res.status(200).json({
         details: Data 
     })
@@ -272,9 +276,51 @@ const UpdateCuestomerStatus = async(req, res) => {
 }
 
 
+const getAllPatnerIdAndLabourId = async(req,res) =>{
+    try{
+    const patnerId = await labourByadmin.find();
+    const cuestomerId = await customermodel.find();
+    res.status(200).json({
+        cuestomer : cuestomerId ,
+        patner : patnerId
+    })
+    }catch(err){
+        res.status(400).json({
+            message: err.message
+        })
+    }
+}
 
 
-module.exports = { admingetallcustomer, admingetalllabour, admingetcustomerbyid, admingetlabourbyid, admingetallwork, admingetworkbyworkid, adminsignup ,adminsignin, GetAllLabourTask, taskAssigntoLabour, UpdateCuestomerStatus}
+const getAllPatnerId = async(req,res) =>{
+    try{
+    const patnerId = await labourByadmin.find();
+    res.status(200).json({
+        patner : patnerId
+    })
+    }catch(err){
+        res.status(400).json({
+            message: err.message
+        })
+    }
+}
+
+
+const AllActivePatner = async(req,res) => {
+    try{
+    const data = await labourByadmin.find({status: "true"})
+    res.status(200).json({
+      data: data
+    })
+    }catch(err){
+        console.log(err);
+        res.status(400).json({
+            message: err.message
+        })
+    }
+}
+
+module.exports = { admingetallcustomer, admingetalllabour, admingetcustomerbyid, admingetlabourbyid, admingetallwork, admingetworkbyworkid, adminsignup ,adminsignin, GetAllLabourTask, taskAssigntoLabour, UpdateCuestomerStatus, getAllPatnerIdAndLabourId, AllActivePatner, getAllPatnerId}
 
 
 

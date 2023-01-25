@@ -16,6 +16,9 @@ const labourSchema = mongoose.Schema({
     }, 
     location: {
         type: String
+    },
+    patnerId: {
+        type: String
     }
 
 }, { timestamps: true})

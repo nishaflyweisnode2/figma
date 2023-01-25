@@ -11,7 +11,7 @@ const {
 } = require("../controller/banner_controllers");
 
 router.post("/addBanner",  addBanner);
-router.get("/getBanner", getBanner);
+router.get("/getBanner/:role", getBanner);
 router.post("/editBanner/:id",  editBanner);
 router.delete("/deleteBanner/:id", deleteBanner);
 

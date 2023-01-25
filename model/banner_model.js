@@ -1,6 +1,9 @@
 const { model, Schema, mongo } = require("mongoose");
 const bannerSchema = new Schema(
   {
+   role: {
+    type: String
+   },
     desc: {
       type: String,
     },

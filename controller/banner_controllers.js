@@ -5,6 +5,7 @@ const Banner = require('../model/banner_model')
 module.exports.addBanner = async (req, res) => {
   try {
       const addBanner = await Banner.create({
+        role: req.body.role,
         desc: req.body.desc,
         link: req.body.link
       });
@@ -21,15 +22,26 @@ module.exports.addBanner = async (req, res) => {
 };
 
 //Get Banner
-module.exports.getBanner = async (req, res) => {
+module.exports.getBannerLabour = async (req, res) => {
   try {
-    const getBanner = await Banner.find();
+    const getBanner = await Banner.find({role: req.params.role});
     res.status(200).json({ status: "success", data: getBanner });
   } catch (error) {
     console.log(error);
   }
 };
 
+
+//
+module.exports.getBanner = async (req, res) => {
+  try {
+    const getBanner = await Banner.find({role: req.params.role});
+    res.status(200).json({ status: "success", data: getBanner });
+  } catch (error) {
+    console.log(error);
+    
+  }
+};
 //Update Banner--
 module.exports.editBanner = async (req, res) => {
   try {

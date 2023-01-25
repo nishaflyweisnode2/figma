@@ -6,18 +6,10 @@ const notification = mongoose.Schema({
         ref: "Customer", 
         require: true
     },
-    Name: {
-        type: String, 
-        require: true
-    }, 
     desc: {
         type: String, 
         require: true, 
     }, 
-    NoLabour: {
-        type: Number, 
-        require: true
-    }
 });
 
 

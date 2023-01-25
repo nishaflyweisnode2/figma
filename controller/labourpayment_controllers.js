@@ -3,13 +3,13 @@ const razerpay = require('razorpay');
 const crypto = require('crypto')
 const uuid = require('uuid')
 const id = uuid.v4();
-const payment = require('../model/payment_module');
-
-
+const payment = require('../model/laobour_payment');
+const labourmodel = require('../model/labour_model')
 const Razorpay = new razerpay({
     key_id: 'rzp_live_xhEiJ4uMcMKT1r',
     key_secret: 'JSwRiz3kcqggnJSTohP1pJPy'
 })
+
 
 
 exports.CreatePaymentOrder = async (req, res) => {
@@ -21,26 +21,28 @@ exports.CreatePaymentOrder = async (req, res) => {
     }
     console.log(data)
     try {
-        if(!payment_Id){
+        if(!req.body.labour_Id){
             return res.status(500).json({
                 message: "LabourId is required"
             })
         }
-        const result = await Razorpay.orders.create(data);
-        console.log(result)
+        // const result = await Razorpay.orders.create(data);
+        // console.log(result)
+            const labour = await labourmodel.findById({_id: req.body.labour_Id})
+            console.log(labour)
         const DBData = {
-            payment_Id: req.body.payment_Id,
-            name: req.body.name,
+            labour_Id: req.body.labour_Id,
+            name: labour.fullname,
             invoice :"123" + req.body.name,
-            payment_Id: result.id, 
-            amount: result.amount, 
-            amount_paid: result.amount, 
-            receipt: result.receipt, 
+          //  payment_Id: result.id, 
+            amount: req.body.amount,
+           // amount_paid: result.amount, 
+         //   receipt: result.receipt, 
             product : req.body.product, 
             orderStatus : req.body.orderStatus
         }
         console.log(DBData)
-        const AmountData = await payment.create(DBData);
+      const AmountData = await payment.create(DBData);
         res.status(200).json({
             details: AmountData
         })
@@ -49,6 +51,7 @@ exports.CreatePaymentOrder = async (req, res) => {
         res.status(400).send({ message: err.message })
     }
 }
+
 
 
 exports.getAllPayments = async(req,res) => {
@@ -63,7 +66,6 @@ exports.getAllPayments = async(req,res) => {
     }
 }
 
-
 exports.GetPaymentsById = async(req,res) => {
     try{
     const Data = await payment.findById({_id: req.params.id});
@@ -73,9 +75,10 @@ exports.GetPaymentsById = async(req,res) => {
     }
 }
 
-exports.getPaymentPaypatnerId = async(req,res) => {
+
+exports.getPaymentPayLabourId = async(req,res) => {
     try{
-    const data = await payment.find({payment_Id: req.params.id});
+    const data = await payment.find({labour_Id: req.params.id});
     res.status(200).json({
         message: data
     })

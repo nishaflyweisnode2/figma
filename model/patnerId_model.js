@@ -67,8 +67,12 @@ const CreatepartnerID = mongoose.Schema({
     kyc: {
         type: String, 
         require: false
+    },
+    status: {
+        type: String, 
+        default: "false"
+
     }
-    
     
 },{ timestamps: true})
 

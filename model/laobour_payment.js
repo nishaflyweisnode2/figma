@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 
-const paymentSchema = mongoose.Schema({
-    payment_Id :{
+
+
+const labourpayment = mongoose.Schema({
+    labour_Id :{
         type: String, 
     }, 
     amount: {
@@ -17,7 +19,7 @@ const paymentSchema = mongoose.Schema({
     }, 
     receipt: {
         type: String, 
-        required: true
+        required: false
     }, 
     amount_paid: {
         type: Number,
@@ -50,10 +52,9 @@ const paymentSchema = mongoose.Schema({
         type: Date,
         default: Date.now
       }
-}, )
+})
 
 
+const Labourpayment = mongoose.model('labourpayment',labourpayment );
 
-const payment = mongoose.model('payment', paymentSchema);
-
-module.exports = payment;
+module.exports = Labourpayment
