@@ -8,6 +8,11 @@ const labourSchema = mongoose.Schema({
      ref: "labour",
      require: true
     },
+    orderId: {
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: "order",
+        require: false
+    },
     name: {
         type:String
     }, 

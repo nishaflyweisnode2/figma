@@ -93,6 +93,7 @@ const taskAssigntoLabour = async(req,res) => {
     }
     const laborData = await labourmodel.findById({_id: req.body.labourId})
     const data = {
+        orderId: req.body.orderId,
         labourId: req.body.labourId,
         name: laborData.fullname,
         desc: req.body.desc, 
@@ -115,7 +116,7 @@ const taskAssigntoLabour = async(req,res) => {
 
 const GetAllLabourTask = async(req,res) =>{
     try{
-        const data = await labourtask.find();
+        const data = await labourtask.find().populate('orderId')
         if(data.length ===  0 ){
             return res.status(500).json({
                 message: "No Data Found "

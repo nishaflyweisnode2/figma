@@ -1,7 +1,7 @@
 const express = require("express");
 const {updatelabourdetails,laboursignup,laboursignin,labourlogout,getlabourprofilebyid,labourgetallwork,labourgetworkbyworkid,
     acceptworkbylabour,rejectworkbylabour,labourgetextendwork,labourgetallextendedwork,labourrejectextendedwork,
-    labouracceptextendedwork,createearnings,getlastsevendaysearnings,gettodaysearnings, sendOtp, verifyOtp, DeleteLabor, labourOrderByLabourID}= require('../controller/labour_controller');
+    labouracceptextendedwork,createearnings,getlastsevendaysearnings,gettodaysearnings, sendOtp, verifyOtp, DeleteLabor, labourOrderByLabourID, updateLabourLocation, getByPatnerId}= require('../controller/labour_controller');
 const router = express.Router();
 
 
@@ -24,7 +24,10 @@ router.get("/gettodaysearnings/:_id",gettodaysearnings);
 router.post('/labour/sendOtp', sendOtp);
 router.post('/labour/verifyotp', verifyOtp);
 router.delete('/admin/labour/:id', DeleteLabor);
-router.get('/labour/order/:id',labourOrderByLabourID )
+router.get('/labour/order/:id',labourOrderByLabourID );
+router.put('/labour/location/update/:id', updateLabourLocation);
+router.post('/labour/paternerId/:patnerId',getByPatnerId );
+
 
 
 

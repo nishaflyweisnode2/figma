@@ -14,6 +14,8 @@ const laboursignup = (req, res) => {
     const addresstype = req.body.addresstype;
     const password = sha256(req.body.password);
     const typesofwork = req.body.typesofwork;
+    const longitude =  parseFloat(req.body.longitude);
+    const  latitude = parseFloat(req.body.latitude);
     const usertype = "labour";
     labourmodel.find({ mobilenumber: mobilenumber, isdeleted: false }).then((resp) => {
         if (resp.length > 0) {
@@ -39,7 +41,11 @@ const laboursignup = (req, res) => {
                 ],
                 typesofwork: typesofwork,
                 password: password,
-                usertype: usertype
+                usertype: usertype,
+                location: {
+                    longitude,
+                    latitude
+                }
             });
             labour.save().then((result) => {
                 const response = {
@@ -550,8 +556,8 @@ const DeleteLabor = async(req,res) =>  {
 
 const labourOrderByLabourID = async(req,res) => {
     try{
-        const patnerId = await labourByadmin.findOne({labourId: req.params.id});
-        const work = await labourtask.findOne({labourId: req.params.id});
+       // const patnerId = await labourByadmin.findOne({labourId: req.params.id});
+        const work = await labourtask.find({labourId: req.params.id}).populate('orderId')
         if(!work){
             return res.status(500).json({
                 message: "No work assign to labour"
@@ -559,8 +565,53 @@ const labourOrderByLabourID = async(req,res) => {
         }
      res.status(200).json({
         data: work, 
-        Id : patnerId. partnerId
+     //   Id : patnerId. partnerId
      })
+    }catch(err){
+        res.status(400).json({
+            message: err.message
+        })
+    }
+}
+
+const updateLabourLocation = async(req,res) => {
+    try{
+    await labourmodel.findOneAndUpdate({_id: req.params.id}, {
+        location: {
+            longitude: parseFloat(req.body.longitude),
+            latitude: parseFloat(req.body.latitude)
+        }
+    })
+    res.status(200).json({
+        message: "Location Updated "
+    })
+    }catch(err){
+        res.status(400).json({
+            message: err.message
+        })
+    }
+}
+
+
+const getByPatnerId = async(req, res) => {
+    try{
+        console.log(req.params.patnerId)
+    const labourData = await labourmodel.find({patnerId: req.params.patnerId});
+    if(labourData.length === 0){
+        return res.status(400).json({
+            message: "No PaternId Found or its Wrong contact to admin"
+        })
+    }
+    console.log(labourData)
+    if(labourData.mobilenumber === req.body.mobilenumber){
+        return res.status(400).json({
+            message: "PartnerId not link with your mobile Number "
+        })
+    }
+    res.status(200).json({
+        message: "ok",
+        result: labourData
+    })
     }catch(err){
         res.status(400).json({
             message: err.message
@@ -574,13 +625,10 @@ const labourOrderByLabourID = async(req,res) => {
 
 
 
-
-
-
-
 module.exports = {
     updatelabourdetails, laboursignup, laboursignin, labourlogout, getlabourprofilebyid,
     labourgetallwork, labourgetworkbyworkid, acceptworkbylabour, rejectworkbylabour, labourgetextendwork,
     labourgetallextendedwork, labouracceptextendedwork, labourrejectextendedwork, createearnings,getlastsevendaysearnings,
-    gettodaysearnings, sendOtp, verifyOtp, DeleteLabor, labourOrderByLabourID
+    gettodaysearnings, sendOtp, verifyOtp, DeleteLabor, labourOrderByLabourID, updateLabourLocation,
+    getByPatnerId
 };

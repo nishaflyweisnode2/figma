@@ -6,6 +6,10 @@ const orderSchema = mongoose.Schema({
        ref: "Customer",
        required: true
     },
+    otp: {
+        type: String,
+        require:true,
+    },
     shopName: {
         type: String
     }, 

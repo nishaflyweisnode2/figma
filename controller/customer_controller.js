@@ -228,11 +228,11 @@ const updatecustomerdetails = (req, res) => {
     const password = req.body.password;
 
     customermodel.findById(customerid).then(result => {
-        if(result.length == 0){
-            return res.status(500).json({
-                message: "UserId is Invalid "
-            })
-        }else{
+        // if(result.length == 0){
+        //     return res.status(500).json({
+        //         message: "UserId is Invalid "
+        //     })
+        // }else{
         result.fullname = fullname;
         result.shopaddress = shopaddress;
         result.shopname = shopname;
@@ -258,7 +258,7 @@ const updatecustomerdetails = (req, res) => {
                         error: err.message,
                     })
                 })
-            }
+            
         })
     
     

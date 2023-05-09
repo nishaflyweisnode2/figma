@@ -48,7 +48,7 @@ exports.updateInvoice = async(req,res) => {
         address: req.body.address, 
         total: req.body.total 
        
-    })
+    }, {new : true})
     res.status(200).json({
         message: "Updated "
     })
@@ -61,7 +61,7 @@ exports.updateInvoice = async(req,res) => {
 
 exports.GetAllInvoice = async(req,res) => {
     try{
-        const data = await Invoive.find();
+        const data = await Invoive.find().populate('cuestomerId')
         if(data.length == 0 ){
             res.status(500).json({
                 message: "No Data Found in DB "

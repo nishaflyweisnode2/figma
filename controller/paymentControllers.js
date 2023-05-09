@@ -21,18 +21,16 @@ exports.CreatePaymentOrder = async (req, res) => {
     }
     console.log(data)
     try {
-        if(!payment_Id){
+        if(!req.body.userId){
             return res.status(500).json({
-                message: "LabourId is required"
+                message: "userID is required"
             })
         }
         const result = await Razorpay.orders.create(data);
         console.log(result)
         const DBData = {
-            payment_Id: req.body.payment_Id,
-            name: req.body.name,
-            invoice :"123" + req.body.name,
-            payment_Id: result.id, 
+            userId: req.body.userId,
+          //  invoice :
             amount: result.amount, 
             amount_paid: result.amount, 
             receipt: result.receipt, 
@@ -67,6 +65,14 @@ exports.getAllPayments = async(req,res) => {
 exports.GetPaymentsById = async(req,res) => {
     try{
     const Data = await payment.findById({_id: req.params.id});
+    res.status(200).json({details: Data })
+    }catch(err){
+        res.status(400).json({message: err.message})
+    }
+}
+exports.GetPaymentsByUserId = async(req,res) => {
+    try{
+    const Data = await payment.find({userId: req.params.id}).populate('userId')
     res.status(200).json({details: Data })
     }catch(err){
         res.status(400).json({message: err.message})

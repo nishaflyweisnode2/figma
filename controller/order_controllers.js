@@ -1,6 +1,6 @@
 const order = require('../model/order_model');
 const cuestomer = require('../model/customer_model')
-
+const otpGenerator = require('otp-generators')
 
 
 exports.placedOrder = async(req,res) => {
@@ -16,11 +16,15 @@ exports.placedOrder = async(req,res) => {
             message: "No Cuestomer Id Found "
         })
      }else{
+        const otp  = otpGenerator.generate(6, { alphabets: false, upperCase: false, specialChar: false });
+
      const data = {
+       
         cuestomerId: req.params.cuestomerId,
         shopName: req.body.shopName, 
         address: req.body.address, 
         hours: req.body.hours, 
+        otp: otp,
         NoWorker: parseInt(req.body.NumberofWorker), 
         time: req.body.time, 
         desc: req.body.desc,
@@ -142,6 +146,26 @@ exports.AllOrder = async(req,res) => {
             sucess: true
         })
     }
+    }catch(err){
+        res.status(400).json({
+            message: err.message, 
+            sucess: false
+        })
+    }
+}
+
+exports.VerifyOrder = async(req, res) => {
+    try{
+    const data = await order.findById({_id: req.params.id});
+    if(data.otp === req.body.otp){
+        return res.status(200).json({
+            message: "ok", 
+            result: data
+        })
+    }
+    res.status(400).json({
+        message: "Otp Not Valid "
+    })
     }catch(err){
         res.status(400).json({
             message: err.message, 

@@ -22,6 +22,16 @@ const labourschema = new mongoose.Schema({
        require:false,
        
     },
+    location: {
+        longitude: {
+          type: Number,
+          default: 28.6198779
+        },
+        latitude: {
+          type: Number,
+          default: 77.3806905
+        },
+      },
     password:{
         type:String,
        require:false,
@@ -51,6 +61,10 @@ const labourschema = new mongoose.Schema({
     patnerId: {
      type: String, 
      require: false
+    },
+    orderId: {
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: "order"
     }
 })
 
